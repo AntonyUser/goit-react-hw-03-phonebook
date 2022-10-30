@@ -4,7 +4,8 @@ import { nanoid } from 'nanoid';
 import { ContactList } from './ContactList/ContactList';
 import { Filter } from './Filter/Filter';
 import { ContactForm } from './ContactForm/ContactFomr';
-// import { Container } from './App.styled';
+// import { Formik } from 'formik';
+import { Container } from './App.styled';
 
 yup.addMethod(yup.string, 'validation', function () {
   return this.matches(
@@ -13,16 +14,20 @@ yup.addMethod(yup.string, 'validation', function () {
   );
 });
 
-// yup.addMethod(yup.string, 'numeric', function () {
-//   return this.matches(
-//     '+?d{1,4}?[-.s]?(?d{1,3}?)?[-.s]?d{1,4}[-.s]?d{1,4}[-.s]?d{1,9}',
-//     'Phone number must be digits and can contain spaces, dashes, parentheses and can start with +'
-//   );
-// });
+yup.addMethod(yup.string, 'numeric', function () {
+  return this.matches(
+    '+?d{1,4}?[-.s]?(?d{1,3}?)?[-.s]?d{1,4}[-.s]?d{1,4}[-.s]?d{1,9}',
+    'Phone number must be digits and can contain spaces, dashes, parentheses and can start with +'
+  );
+});
 
 const Schema = yup.object().shape({
   name: yup.string().required().validation(),
-  number: yup.string().required(),
+  number: yup
+    .number(
+      'Phone number must be digits and can contain spaces, dashes, parentheses and can start with +'
+    )
+    .required(),
 });
 
 class App extends Component {
@@ -38,7 +43,8 @@ class App extends Component {
     filter: '',
   };
 
-  onSubmit = ({ name, number }) => {
+  onSubmit = ({ name, number }, actions) => {
+    console.log(actions);
     const contact = {
       id: nanoid(),
       name,
@@ -46,7 +52,7 @@ class App extends Component {
     };
     this.setState(prevState => {
       return {
-        contacts: [...prevState.contacts, contact],
+        contacts: [contact, ...prevState.contacts],
       };
     });
   };
@@ -73,7 +79,7 @@ class App extends Component {
       contact.name.toLowerCase().includes(this.state.filter.toLowerCase())
     );
     return (
-      <>
+      <Container>
         <h2>Phonebook</h2>
         <ContactForm
           schema={Schema}
@@ -88,7 +94,7 @@ class App extends Component {
           contacts={visiableContacts}
           onClick={this.toDeleteContact}
         />
-      </>
+      </Container>
     );
   }
 }
