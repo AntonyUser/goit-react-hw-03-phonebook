@@ -1,6 +1,6 @@
-import { Formik, ErrorMessage, Field } from 'formik';
+import { Formik, Field } from 'formik';
 import PropTypes from 'prop-types';
-import { Form, Button } from '../ContactForm/ContactForm.styled';
+import { Form, Button, ErrorMessage } from '../ContactForm/ContactForm.styled';
 import css from '../ContactForm/ContactForm.module.css';
 
 export const ContactForm = ({ schema, onSubmit, name, onChange, number }) => {

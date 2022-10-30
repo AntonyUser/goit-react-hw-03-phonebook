@@ -43,18 +43,24 @@ class App extends Component {
     filter: '',
   };
 
-  onSubmit = ({ name, number }, actions) => {
-    console.log(actions);
-    const contact = {
-      id: nanoid(),
-      name,
-      number,
-    };
-    this.setState(prevState => {
-      return {
-        contacts: [contact, ...prevState.contacts],
+  onSubmit = ({ name, number }) => {
+    const names = this.state.contacts.map(contact => contact.name);
+    if (!names.includes(name)) {
+      const contact = {
+        id: nanoid(),
+        name,
+        number,
       };
-    });
+      this.setState(prevState => {
+        return {
+          contacts: [contact, ...prevState.contacts],
+          name: '',
+          number: '',
+        };
+      });
+    } else {
+      window.alert(`${name} is already in contacts`);
+    }
   };
   onChange = e => {
     const { name, value } = e.currentTarget;
