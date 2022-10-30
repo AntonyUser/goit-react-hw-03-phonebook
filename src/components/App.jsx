@@ -13,21 +13,16 @@ yup.addMethod(yup.string, 'validation', function () {
     "Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
   );
 });
-
-yup.addMethod(yup.string, 'numeric', function () {
-  return this.matches(
-    '+?d{1,4}?[-.s]?(?d{1,3}?)?[-.s]?d{1,4}[-.s]?d{1,4}[-.s]?d{1,9}',
-    'Phone number must be digits and can contain spaces, dashes, parentheses and can start with +'
-  );
-});
+// yup.addMethod(yup.string, 'numeric', function () {
+//   return this.matches(
+//     '+?d{1,4}?[-.s]?(?d{1,3}?)?[-.s]?d{1,4}[-.s]?d{1,4}[-.s]?d{1,9}',
+//     'Phone number must be digits and can contain spaces, dashes, parentheses and can start with +'
+//   );
+// });
 
 const Schema = yup.object().shape({
-  name: yup.string().required().validation(),
-  number: yup
-    .number(
-      'Phone number must be digits and can contain spaces, dashes, parentheses and can start with +'
-    )
-    .required(),
+  name: yup.string().validation().required(),
+  number: yup.string().required(),
 });
 
 class App extends Component {
@@ -58,6 +53,8 @@ class App extends Component {
           number: '',
         };
       });
+    } else if (!this.state.name) {
+      return;
     } else {
       window.alert(`${name} is already in contacts`);
     }
