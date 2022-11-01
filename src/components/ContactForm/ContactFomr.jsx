@@ -1,7 +1,12 @@
 import { Formik, Field } from 'formik';
 import PropTypes from 'prop-types';
-import { Form, Button, ErrorMessage } from '../ContactForm/ContactForm.styled';
-import css from '../ContactForm/ContactForm.module.css';
+import {
+  Form,
+  Button,
+  ErrorMessage,
+  Label,
+  Input,
+} from '../ContactForm/ContactForm.styled';
 
 export const ContactForm = ({ schema, onSubmit, name, onChange, number }) => {
   return (
@@ -14,27 +19,25 @@ export const ContactForm = ({ schema, onSubmit, name, onChange, number }) => {
         }}
       >
         <Form>
-          <Field as="label" className={css.label}>
+          <Field as={Label}>
             <span>Name</span>
             <Field
-              as="input"
+              as={Input}
               type="text"
               name="name"
               value={name}
               onChange={onChange}
-              className={css.input}
             />
             <ErrorMessage name="name" component="div" />
           </Field>
-          <Field as="label" className={css.label}>
+          <Field as={Label}>
             <span>Number</span>
             <Field
-              as="input"
+              as={Input}
               type="tel"
               name="number"
               value={number}
               onChange={onChange}
-              className={css.input}
             />
             <ErrorMessage name="number" component="div" />
           </Field>

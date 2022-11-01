@@ -16,3 +16,15 @@ export const Button = styled.button`
   font-size: 18px;
   margin-left: 10px;
 `;
+export const Input = styled.input`
+  display: block;
+  padding: 10px;
+  border-radius: 4px;
+  font-size: 22px;
+`;
+export const Label = styled.label`
+  display: block;
+  padding: 10px;
+  border-radius: 4px;
+  font-size: 22px;
+`;
